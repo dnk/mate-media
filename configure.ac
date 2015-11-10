@@ -76,7 +76,7 @@ PKG_CHECK_MODULES(VOLUME_CONTROL,
                   libcanberra-gtk$CANBERRA_API_VERSION >= $CANBERRA_REQUIRED_VERSION
                   unique-$UNIQUE_API_VERSION
                   libxml-2.0
-                  mate-desktop-2.0 >= $MATE_DESKTOP_REQUIRED_VERSION
+                  mate-desktop-$GTK_API_VERSION >= $MATE_DESKTOP_REQUIRED_VERSION
                   libmatemixer >= $MATE_MIXER_REQUIRED_VERSION
 )
 AC_SUBST(VOLUME_CONTROL_CFLAGS)
