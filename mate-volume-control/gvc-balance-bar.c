@@ -74,11 +74,7 @@ static gboolean on_scale_scroll_event       (GtkWidget          *widget,
 static void     on_adjustment_value_changed (GtkAdjustment      *adjustment,
                                              GvcBalanceBar      *bar);
 
-#if GTK_CHECK_VERSION (3, 0, 0)
 G_DEFINE_TYPE (GvcBalanceBar, gvc_balance_bar, GTK_TYPE_BOX)
-#else
-G_DEFINE_TYPE (GvcBalanceBar, gvc_balance_bar, GTK_TYPE_HBOX)
-#endif
 
 static void
 create_scale_box (GvcBalanceBar *bar)
@@ -362,7 +358,12 @@ gvc_balance_bar_set_balance_type (GvcBalanceBar *bar, GvcBalanceType btype)
                 break;
         }
 
+#if GTK_CHECK_VERSION (3, 16, 0)
+        gtk_label_set_xalign (GTK_LABEL (bar->priv->label), 0.0);
+        gtk_label_set_yalign (GTK_LABEL (bar->priv->label), 0.0);
+#else
         gtk_misc_set_alignment (GTK_MISC (bar->priv->label), 0.0, 0.0);
+#endif
 
         /* Frame */
         frame = gtk_frame_new (NULL);
