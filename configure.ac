@@ -56,12 +56,10 @@ case "$with_gtk" in
   2.0) GTK_API_VERSION=2.0
        GTK_REQUIRED_VERSION=2.24.0
        CANBERRA_API_VERSION=
-       UNIQUE_API_VERSION=1.0
        ;;
   3.0) GTK_API_VERSION=3.0
        GTK_REQUIRED_VERSION=3.0.0
        CANBERRA_API_VERSION=3
-       UNIQUE_API_VERSION=3.0
        ;;
 esac
 
@@ -87,7 +85,6 @@ AS_IF([test "$GTK_API_VERSION" = "3.0"], [
                           gtk+-$GTK_API_VERSION >= $GTK_REQUIRED_VERSION
                           gio-2.0 >= $GIO_REQUIRED_VERSION
                           libcanberra-gtk$CANBERRA_API_VERSION >= $CANBERRA_REQUIRED_VERSION
-                          unique-$UNIQUE_API_VERSION
                           libxml-2.0
                           mate-desktop-2.0 >= $MATE_DESKTOP_REQUIRED_VERSION
                           libmatemixer >= $MATE_MIXER_REQUIRED_VERSION
