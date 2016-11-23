@@ -1,7 +1,7 @@
 AC_PREREQ(2.60)
 
 AC_INIT([mate-media],
-        [1.14.0],
+        [1.16.0],
         [http://www.mate-desktop.org/])
 
 AC_CONFIG_AUX_DIR([build-aux])
@@ -35,7 +35,7 @@ AC_TYPE_SIZE_T
 GLIB_REQUIRED_VERSION=2.36.0
 GIO_REQUIRED_VERSION=2.36.0
 CANBERRA_REQUIRED_VERSION=0.13
-MATE_MIXER_REQUIRED_VERSION=1.9.1
+MATE_MIXER_REQUIRED_VERSION=1.10.0
 MATE_DESKTOP_REQUIRED_VERSION=1.9.3
 
 dnl=======================================================================
@@ -65,20 +65,35 @@ case "$with_gtk" in
        ;;
 esac
 
+AC_SUBST(GTK_API_VERSION)
+
 dnl=======================================================================
 dnl Check for the volume control modules
 dnl=======================================================================
 
-PKG_CHECK_MODULES(VOLUME_CONTROL,
-                  gobject-2.0 >= $GLIB_REQUIRED_VERSION
-                  gtk+-$GTK_API_VERSION >= $GTK_REQUIRED_VERSION
-                  gio-2.0 >= $GIO_REQUIRED_VERSION
-                  libcanberra-gtk$CANBERRA_API_VERSION >= $CANBERRA_REQUIRED_VERSION
-                  unique-$UNIQUE_API_VERSION
-                  libxml-2.0
-                  mate-desktop-$GTK_API_VERSION >= $MATE_DESKTOP_REQUIRED_VERSION
-                  libmatemixer >= $MATE_MIXER_REQUIRED_VERSION
-)
+AS_IF([test "$GTK_API_VERSION" = "3.0"], [
+        PKG_CHECK_MODULES(VOLUME_CONTROL,
+                          gobject-2.0 >= $GLIB_REQUIRED_VERSION
+                          gtk+-$GTK_API_VERSION >= $GTK_REQUIRED_VERSION
+                          gio-2.0 >= $GIO_REQUIRED_VERSION
+                          libcanberra-gtk$CANBERRA_API_VERSION >= $CANBERRA_REQUIRED_VERSION
+                          libxml-2.0
+                          mate-desktop-2.0 >= $MATE_DESKTOP_REQUIRED_VERSION
+                          libmatemixer >= $MATE_MIXER_REQUIRED_VERSION
+        )
+], [
+        PKG_CHECK_MODULES(VOLUME_CONTROL,
+                          gobject-2.0 >= $GLIB_REQUIRED_VERSION
+                          gtk+-$GTK_API_VERSION >= $GTK_REQUIRED_VERSION
+                          gio-2.0 >= $GIO_REQUIRED_VERSION
+                          libcanberra-gtk$CANBERRA_API_VERSION >= $CANBERRA_REQUIRED_VERSION
+                          unique-$UNIQUE_API_VERSION
+                          libxml-2.0
+                          mate-desktop-2.0 >= $MATE_DESKTOP_REQUIRED_VERSION
+                          libmatemixer >= $MATE_MIXER_REQUIRED_VERSION
+        )
+])
+
 AC_SUBST(VOLUME_CONTROL_CFLAGS)
 AC_SUBST(VOLUME_CONTROL_LIBS)
 
